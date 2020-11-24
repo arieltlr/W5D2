@@ -75,18 +75,36 @@ end
 def films_by_id
   # What are the titles of the films with id 1119, 1595, 1768?
   execute(<<-SQL)
+  SELECT
+  title
+  FROM
+  movies
+  WHERE
+    id IN (1119, 1595, 1768)
   SQL
 end
 
 def glenn_close_id
   # What id number does the actress 'Glenn Close' have?
   execute(<<-SQL)
+  SELECT
+    id
+  FROM
+    actors
+  WHERE
+    name = 'Glenn Close';
   SQL
 end
 
 def casablanca_id
   # What is the id of the film 'Casablanca'?
   execute(<<-SQL)
+  SELECT
+    id
+  FROM
+    movies
+  WHERE
+    title = 'Casablanca'
   SQL
 end
 
@@ -94,11 +112,36 @@ def casablanca_cast
   # Obtain the cast list for 'Casablanca'. Use the id value that you obtained
   # in the previous question directly in your query (for example, id = 1).
   execute(<<-SQL)
+  SELECT
+    name
+  FROM
+    actors
+  JOIN
+    castings ON actors.id = actor_id
+  WHERE
+    movie_id = 27 ;
+
   SQL
 end
 
 def alien_cast
   # Obtain the cast list for the film 'Alien'
   execute(<<-SQL)
+  SELECT
+    name
+  FROM
+    actors
+  JOIN
+    castings ON actors.id = actor_id
+  WHERE
+    movie_id IN (
+      SELECT
+         id
+      FROM
+        movies
+      WHERE
+        title = 'Alien'
+    );
+
   SQL
 end
